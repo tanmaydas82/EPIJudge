@@ -5,9 +5,29 @@ public class SearchFirstGreaterValueInBst {
 
   public static BstNode<Integer> findFirstGreaterThanK(BstNode<Integer> tree,
                                                        Integer k) {
-    // TODO - you fill in here.
-    return null;
+
+    return findFirstGreaterThanK_helper(tree, k);
   }
+
+    private static BstNode<Integer> findFirstGreaterThanK_helper(BstNode<Integer> tree,
+                                                         Integer k) {
+
+      if(tree == null) return null;
+
+      BstNode<Integer> result = null;
+
+      while (tree != null) {
+          if(tree.data > k) {
+              result = tree;
+              tree = tree.left;
+          } else {
+              tree = tree.right;
+          }
+      }
+
+      return result;
+    }
+
   @EpiTest(testDataFile = "search_first_greater_value_in_bst.tsv")
   public static int findFirstGreaterThanKWrapper(BstNode<Integer> tree,
                                                  Integer k) {

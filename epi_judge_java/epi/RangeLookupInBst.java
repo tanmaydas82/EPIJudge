@@ -2,6 +2,8 @@ package epi;
 import epi.test_framework.EpiTest;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 public class RangeLookupInBst {
@@ -20,26 +22,49 @@ public class RangeLookupInBst {
 
   public static List<Integer> rangeLookupInBst(BstNode<Integer> tree,
                                                Interval interval) {
-    // TODO - you fill in here.
-    return Collections.emptyList();
+        List<Integer> res = new ArrayList<>();
+
+        rangeLookupInBst_helper(tree, interval, res);
+
+        return res;
   }
-  public static void rangeLookupInBstHelper(BstNode<Integer> tree,
-                                            Interval interval,
-                                            List<Integer> result) {
-    if (tree == null) {
-      return;
+
+    public static void rangeLookupInBst_helper(BstNode<Integer> tree,
+                                                 Interval interval, List<Integer> result) {
+
+        if (tree == null) {
+            return;
+        }
+
+        if(tree.data < interval.left) {
+            rangeLookupInBst_helper(tree.right, interval, result);
+        } else if(tree.data > interval.right) {
+            rangeLookupInBst_helper(tree.left, interval, result);
+        } else {
+            rangeLookupInBst_helper(tree.left, interval, result);
+            result.add(tree.data);
+            rangeLookupInBst_helper(tree.right, interval, result);
+        }
     }
-    if (interval.left <= tree.data && tree.data <= interval.right) {
-      // tree.data lies in the interval.
-      rangeLookupInBstHelper(tree.left, interval, result);
-      result.add(tree.data);
-      rangeLookupInBstHelper(tree.right, interval, result);
-    } else if (interval.left > tree.data) {
-      rangeLookupInBstHelper(tree.right, interval, result);
-    } else { // interval.right >= tree.data
-      rangeLookupInBstHelper(tree.left, interval, result);
-    }
-  }
+
+
+//  public static void rangeLookupInBstHelper(BstNode<Integer> tree,
+//                                            Interval interval,
+//                                            List<Integer> result) {
+//    if (tree == null) {
+//      return;
+//    }
+//    if (interval.left <= tree.data && tree.data <= interval.right) {
+//      // tree.data lies in the interval.
+//      rangeLookupInBstHelper(tree.left, interval, result);
+//      result.add(tree.data);
+//      rangeLookupInBstHelper(tree.right, interval, result);
+//    } else if (interval.left > tree.data) {
+//      rangeLookupInBstHelper(tree.right, interval, result);
+//    } else { // interval.right >= tree.data
+//      rangeLookupInBstHelper(tree.left, interval, result);
+//    }
+//  }
 
   public static void main(String[] args) {
     System.exit(

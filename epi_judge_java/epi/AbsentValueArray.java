@@ -5,7 +5,7 @@ public class AbsentValueArray {
 
   @EpiTest(testDataFile = "absent_value_array.tsv")
   public static int findMissingElement(Iterable<Integer> stream) {
-    // TODO - you fill in here.
+    // TODO - you fill in here
     return 0;
   }
 

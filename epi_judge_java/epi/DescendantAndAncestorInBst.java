@@ -9,8 +9,69 @@ public class DescendantAndAncestorInBst {
   pairIncludesAncestorAndDescendantOfM(BstNode<Integer> possibleAncOrDesc0,
                                        BstNode<Integer> possibleAncOrDesc1,
                                        BstNode<Integer> middle) {
-    // TODO - you fill in here.
-    return true;
+
+      if(possibleAncOrDesc0 == middle || possibleAncOrDesc1 == middle) return false;
+
+      BstNode<Integer> first = possibleAncOrDesc0;
+      BstNode<Integer> second = possibleAncOrDesc1;
+
+      while( (first != null && first != middle) || (second != null && second != middle) ) {
+
+          if(first != null) {
+              if (first.data > middle.data) {
+                  first = first.left;
+              } else {
+                  first = first.right;
+              }
+          }
+
+          if(second != null) {
+              if (second.data > middle.data) {
+                  second = second.left;
+              } else {
+                  second = second.right;
+              }
+          }
+      }
+
+      if(first == null && second == null) {
+          return false;
+      }
+
+      if(first == middle) {
+
+          second = possibleAncOrDesc1;
+
+          while (middle != null && middle != second) {
+              if(middle.data > second.data) {
+                  middle = middle.left;
+              } else {
+                  middle =  middle.right;
+              }
+          }
+
+          if(middle == null) {
+              return false;
+          }
+
+      } else if(second == middle) {
+
+          first = possibleAncOrDesc0;
+
+          while (middle != null && middle != first) {
+              if(middle.data > first.data) {
+                  middle = middle.left;
+              } else {
+                  middle =  middle.right;
+              }
+          }
+
+          if(middle == null) {
+              return false;
+          }
+      }
+
+      return true;
   }
   @EpiTest(testDataFile = "descendant_and_ancestor_in_bst.tsv")
   public static boolean pairIncludesAncestorAndDescendantOfMWrapper(

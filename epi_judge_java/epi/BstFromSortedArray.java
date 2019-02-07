@@ -8,11 +8,21 @@ import epi.test_framework.TimedExecutor;
 import java.util.List;
 public class BstFromSortedArray {
 
-  public static BstNode<Integer>
-  buildMinHeightBSTFromSortedArray(List<Integer> A) {
-    // TODO - you fill in here.
-    return null;
-  }
+    public static BstNode<Integer>
+    buildMinHeightBSTFromSortedArray(List<Integer> A) {
+      return buildMinHeightBSTFromSortedArray_helper(A, 0, A.size()-1);
+    }
+
+    private static BstNode<Integer>
+    buildMinHeightBSTFromSortedArray_helper(List<Integer> A, int start, int end) {
+        if(start > end) return null;
+        int mid = start + ((end-start)/2);
+        BstNode<Integer> root = new BstNode<>(A.get(mid));
+        root.left = buildMinHeightBSTFromSortedArray_helper(A, start, mid-1);
+        root.right = buildMinHeightBSTFromSortedArray_helper(A, mid+1, end);
+        return root;
+    }
+
   @EpiTest(testDataFile = "bst_from_sorted_array.tsv")
   public static int
   buildMinHeightBSTFromSortedArrayWrapper(TimedExecutor executor,
