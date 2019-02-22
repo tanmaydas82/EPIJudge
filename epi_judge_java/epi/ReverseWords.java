@@ -5,9 +5,34 @@ import epi.test_framework.TimedExecutor;
 public class ReverseWords {
 
   public static void reverseWords(char[] input) {
-    // TODO - you fill in here.
-    return;
+      reverse(input, 0, input.length-1);
+
+      int first=0;
+
+      for(int pos=0; pos < input.length; pos++) {
+
+          if(input[pos] == ' ') {
+              reverse(input, first, pos-1);
+              first = pos+1;
+          }
+      }
+
+      reverse(input, first, input.length-1);
+
+      return;
   }
+
+  private static void reverse(char[] input, int first, int last) {
+
+      if (first >= last) return;
+
+      for(int beg=first, end=last; beg < end; beg++, end--) {
+          char t = input[beg];
+          input[beg] = input[end];
+          input[end] = t;
+      }
+  }
+
   @EpiTest(testDataFile = "reverse_words.tsv")
   public static String reverseWordsWrapper(TimedExecutor executor, String s)
       throws Exception {
